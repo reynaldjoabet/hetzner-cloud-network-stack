@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300" font-family="Helvetica, Arial, sans-serif">
+  <rect width="960" height="300" fill="#ffffff"/>
+  <text x="30" y="36" font-size="18" font-weight="bold" fill="#1b1f27">Hetzner Cloud network stack: timeline</text>
+  <line x1="60" y1="120" x2="910" y2="120" stroke="#c9d0db" stroke-width="3"/>
+
+  <g font-size="13" fill="#1b1f27">
+    <circle cx="80" cy="120" r="9" fill="#6b7a90"/>
+    <text x="80" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#5b6475">2011</text>
+    <text x="80" y="152" text-anchor="middle" font-weight="bold">vServers</text>
+    <text x="80" y="170" text-anchor="middle" fill="#5b6475">Linux bridge</text>
+    <text x="80" y="186" text-anchor="middle" fill="#5b6475">static routes</text>
+    <text x="80" y="202" text-anchor="middle" fill="#5b6475">1 Gb/s per host</text>
+
+    <circle cx="225" cy="120" r="9" fill="#6b7a90"/>
+    <text x="225" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#5b6475">2015</text>
+    <text x="225" y="152" text-anchor="middle" font-weight="bold">Ceph cloud</text>
+    <text x="225" y="170" text-anchor="middle" fill="#5b6475">BGP routing</text>
+    <text x="225" y="186" text-anchor="middle" fill="#5b6475">1:1 NAT for IPv4</text>
+    <text x="225" y="202" text-anchor="middle" fill="#5b6475">2×10 Gb/s (2016)</text>
+
+    <circle cx="370" cy="120" r="9" fill="#6b7a90"/>
+    <text x="370" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#5b6475">2018</text>
+    <text x="370" y="152" text-anchor="middle" font-weight="bold">Hetzner Cloud</text>
+    <text x="370" y="170" text-anchor="middle" fill="#5b6475">NAT dropped</text>
+    <text x="370" y="186" text-anchor="middle" fill="#5b6475">IPv4 routed directly</text>
+
+    <circle cx="515" cy="120" r="9" fill="#6b7a90"/>
+    <text x="515" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#5b6475">Jul 2019</text>
+    <text x="515" y="152" text-anchor="middle" font-weight="bold">Open vSwitch</text>
+    <text x="515" y="170" text-anchor="middle" fill="#5b6475">private networks</text>
+    <text x="515" y="186" text-anchor="middle" fill="#5b6475">over VXLAN</text>
+
+    <circle cx="660" cy="120" r="9" fill="#6b7a90"/>
+    <text x="660" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#5b6475">2020–2021</text>
+    <text x="660" y="152" text-anchor="middle" font-weight="bold">Public net on OVS</text>
+    <text x="660" y="170" text-anchor="middle" fill="#5b6475">Cloud Firewalls</text>
+    <text x="660" y="186" text-anchor="middle" fill="#5b6475">netfilter conntrack</text>
+    <text x="660" y="202" text-anchor="middle" fill="#5b6475">80k conn cap</text>
+
+    <circle cx="805" cy="120" r="9" fill="#0f7b6c"/>
+    <text x="805" y="95" text-anchor="middle" font-family="Menlo, monospace" font-size="12" fill="#0f7b6c">Jul–Aug 2026</text>
+    <text x="805" y="152" text-anchor="middle" font-weight="bold" fill="#0f7b6c">hcnet (eBPF)</text>
+    <text x="805" y="170" text-anchor="middle" fill="#5b6475">all Load Balancers</text>
+    <text x="805" y="186" text-anchor="middle" fill="#5b6475">then servers (beta)</text>
+    <text x="805" y="202" text-anchor="middle" fill="#5b6475">120k v4 + 120k v6</text>
+  </g>
+  <text x="30" y="270" font-size="12" fill="#5b6475">~25k instances (2011 stack) → ~50k (2015 stack) → over 1M cloud servers on OVS before hcnet</text>
+</svg>

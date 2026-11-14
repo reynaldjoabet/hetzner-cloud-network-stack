@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" width="900" height="460" font-family="Helvetica, Arial, sans-serif" font-size="13" role="img" aria-label="Throughput, standard stack vs hcnet: plain TCP roughly halves on hcnet, WireGuard improves">
+  <title>Throughput, standard stack vs hcnet (Cloudfleet benchmark, CCX23, fsn1, pair A)</title>
+  <rect width="900" height="460" fill="#ffffff"/>
+  <text x="30" y="30" font-size="17" font-weight="bold" fill="#1b1f27">Throughput: standard stack vs hcnet</text>
+  <text x="30" y="50" font-size="12" fill="#5b6475">CCX23 (4 dedicated vCPU), fsn1, host pair A, median of 3 × 10 s runs. Gbit/s, higher is better.</text>
+
+  <!-- legend -->
+  <rect x="30" y="62" width="14" height="10" rx="2" fill="#b5651d"/>
+  <text x="50" y="71" fill="#1b1f27">Standard (OVS)</text>
+  <rect x="160" y="62" width="14" height="10" rx="2" fill="#00897b"/>
+  <text x="180" y="71" fill="#1b1f27">hcnet</text>
+
+  <!-- grid: x = 250 + v*30 -->
+  <g stroke="#e3e7ee" stroke-width="1">
+    <line x1="250" y1="106" x2="250" y2="374" stroke="#9aa3b4"/>
+    <line x1="400" y1="106" x2="400" y2="374"/>
+    <line x1="550" y1="106" x2="550" y2="374"/>
+    <line x1="700" y1="106" x2="700" y2="374"/>
+    <line x1="850" y1="106" x2="850" y2="374"/>
+  </g>
+  <g font-size="12" fill="#5b6475" text-anchor="middle">
+    <text x="250" y="394">0</text>
+    <text x="400" y="394">5</text>
+    <text x="550" y="394">10</text>
+    <text x="700" y="394">15</text>
+    <text x="850" y="394">20</text>
+  </g>
+  <text x="550" y="414" font-size="12" fill="#5b6475" text-anchor="middle">Gbit/s</text>
+
+  <!-- section: TCP -->
+  <text x="30" y="100" font-size="12" font-weight="bold" fill="#5b6475">PLAIN TCP, 8 STREAMS (iperf3)</text>
+
+  <text x="235" y="129" text-anchor="end" fill="#1b1f27">Public IPv4</text>
+  <rect x="250" y="112" width="516" height="14" rx="2" fill="#b5651d"/>
+  <text x="772" y="123" font-size="12" fill="#1b1f27">17.2</text>
+  <rect x="250" y="128" width="287.1" height="14" rx="2" fill="#00897b"/>
+  <text x="543" y="139" font-size="12" fill="#1b1f27">9.57  (−44%)</text>
+
+  <text x="235" y="181" text-anchor="end" fill="#1b1f27">Public IPv6</text>
+  <rect x="250" y="164" width="537" height="14" rx="2" fill="#b5651d"/>
+  <text x="793" y="175" font-size="12" fill="#1b1f27">17.9</text>
+  <rect x="250" y="180" width="274.5" height="14" rx="2" fill="#00897b"/>
+  <text x="530" y="191" font-size="12" fill="#1b1f27">9.15  (−49%)</text>
+
+  <text x="235" y="233" text-anchor="end" fill="#1b1f27">Private network</text>
+  <rect x="250" y="216" width="531" height="14" rx="2" fill="#b5651d"/>
+  <text x="787" y="227" font-size="12" fill="#1b1f27">17.7</text>
+  <rect x="250" y="232" width="287.1" height="14" rx="2" fill="#00897b"/>
+  <text x="543" y="243" font-size="12" fill="#1b1f27">9.57  (−46%)</text>
+
+  <!-- section: WireGuard -->
+  <text x="30" y="276" font-size="12" font-weight="bold" fill="#5b6475">WIREGUARD TUNNEL, 4 STREAMS (wireguard-go)</text>
+
+  <text x="235" y="305" text-anchor="end" fill="#1b1f27">Over public IPv4</text>
+  <rect x="250" y="288" width="100.8" height="14" rx="2" fill="#b5651d"/>
+  <text x="357" y="299" font-size="12" fill="#1b1f27">3.36</text>
+  <rect x="250" y="304" width="122.4" height="14" rx="2" fill="#00897b"/>
+  <text x="379" y="315" font-size="12" fill="#1b1f27">4.08  (+21%)</text>
+
+  <text x="235" y="357" text-anchor="end" fill="#1b1f27">Over private network</text>
+  <rect x="250" y="340" width="91.8" height="14" rx="2" fill="#b5651d"/>
+  <text x="348" y="351" font-size="12" fill="#1b1f27">3.06</text>
+  <rect x="250" y="356" width="127.2" height="14" rx="2" fill="#00897b"/>
+  <text x="384" y="367" font-size="12" fill="#1b1f27">4.24  (+39%)</text>
+
+  <text x="30" y="444" font-size="11" fill="#5b6475">Source: Cloudfleet, hcnet benchmark, 10 Nov 2026. hcnet is in beta; results may change.</text>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360" font-family="Helvetica, Arial, sans-serif" font-size="13">
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#5b6475"/></marker></defs>
+  <rect width="900" height="360" fill="#ffffff"/>
+  <text x="30" y="34" font-size="17" font-weight="bold" fill="#1b1f27">New connection arrives, conntrack table is full (Cloud Firewall attached)</text>
+
+  <!-- Standard -->
+  <rect x="30" y="60" width="400" height="280" rx="10" fill="#f4f5f8" stroke="#6b7a90"/>
+  <text x="50" y="88" font-family="Menlo, monospace" font-size="12" font-weight="bold" fill="#6b7a90">STANDARD (OVS) · 80,000 total v4+v6</text>
+  <rect x="130" y="110" width="200" height="40" rx="6" fill="#ffffff" stroke="#c9d0db"/>
+  <text x="230" y="135" text-anchor="middle" fill="#1b1f27">New packet</text>
+  <line x1="230" y1="150" x2="230" y2="185" stroke="#5b6475" marker-end="url(#arr)"/>
+  <rect x="130" y="185" width="200" height="40" rx="6" fill="#ffffff" stroke="#c9d0db"/>
+  <text x="230" y="210" text-anchor="middle" fill="#1b1f27">Table full</text>
+  <line x1="230" y1="225" x2="230" y2="260" stroke="#5b6475" marker-end="url(#arr)"/>
+  <rect x="130" y="260" width="200" height="44" rx="6" fill="#fbe7ea" stroke="#d50c2d"/>
+  <text x="230" y="287" text-anchor="middle" font-weight="bold" fill="#b00a26">DROP</text>
+  <text x="230" y="326" text-anchor="middle" font-size="12" fill="#5b6475">Nobody new gets in until connections close</text>
+
+  <!-- hcnet -->
+  <rect x="470" y="60" width="400" height="280" rx="10" fill="#eef7f5" stroke="#0f7b6c"/>
+  <text x="490" y="88" font-family="Menlo, monospace" font-size="12" font-weight="bold" fill="#0f7b6c">hcnet · 120,000 v4 + 120,000 v6</text>
+  <rect x="570" y="110" width="200" height="40" rx="6" fill="#ffffff" stroke="#c9d0db"/>
+  <text x="670" y="135" text-anchor="middle" fill="#1b1f27">New packet</text>
+  <line x1="670" y1="150" x2="670" y2="185" stroke="#5b6475" marker-end="url(#arr)"/>
+  <rect x="550" y="185" width="240" height="40" rx="6" fill="#ffffff" stroke="#c9d0db"/>
+  <text x="670" y="210" text-anchor="middle" fill="#1b1f27">Table full → skip tracking</text>
+  <line x1="670" y1="225" x2="670" y2="245" stroke="#5b6475"/>
+  <text x="680" y="241" font-size="12" fill="#5b6475">check firewall rules only</text>
+  <line x1="670" y1="245" x2="590" y2="260" stroke="#5b6475" marker-end="url(#arr)"/>
+  <line x1="670" y1="245" x2="750" y2="260" stroke="#5b6475" marker-end="url(#arr)"/>
+  <rect x="500" y="260" width="160" height="44" rx="6" fill="#e6f4f1" stroke="#0f7b6c"/>
+  <text x="580" y="280" text-anchor="middle" font-weight="bold" fill="#0a5e52">Rule matches</text>
+  <text x="580" y="296" text-anchor="middle" font-size="12" fill="#0a5e52">deliver</text>
+  <rect x="680" y="260" width="160" height="44" rx="6" fill="#fbe7ea" stroke="#d50c2d"/>
+  <text x="760" y="280" text-anchor="middle" font-weight="bold" fill="#b00a26">No rule</text>
+  <text x="760" y="296" text-anchor="middle" font-size="12" fill="#b00a26">drop</text>
+  <text x="670" y="326" text-anchor="middle" font-size="12" fill="#5b6475">Replies that rely on tracked state may still drop</text>
+</svg>
