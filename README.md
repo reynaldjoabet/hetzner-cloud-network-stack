@@ -106,10 +106,10 @@ hcnet already carries all Hetzner Load Balancers (moved between 9 July and 21 Au
 
 What changes:
 
-- **Firewalls:** each Cloud Firewall is compiled into its own eBPF program. The kernel's verifier checks it, the kernel JIT-compiles it to machine code, and it is attached right in front of the server's virtual network card.
-- **Connection tracking:** hcnet uses its own conntrack, not the kernel's shared netfilter table. Each server gets **120,000 connections for IPv4 and 120,000 for IPv6**, at no extra cost. Conntrack only runs when a Cloud Firewall is attached.
-- **DHCP:** one built-in implementation for all interfaces, instead of `udhcpd` plus the controller.
-- **Metadata:** still at `169.254.169.254`, now also at `fe80::a9fe:a9fe`, and reachable from every public and private interface.
+- **Firewalls:** each Cloud Firewall is optimized and compiled into its own standalone eBPF program. The kernel's verifier checks it, the kernel JIT-compiles it to machine code, and it is attached right in front of the server's virtual network card. Hetzner says this makes firewalls more efficient. See [From the Console to your vNIC](docs/ebpf.md#on-hcnet-from-the-console-to-your-vnic).
+- **Connection tracking:** hcnet uses its own conntrack, not the kernel's shared netfilter table. Each server gets **120,000 connections for IPv4 and 120,000 for IPv6**, at no extra cost. Conntrack only runs when a Cloud Firewall is attached. Because it is a new implementation, Hetzner says tracking may differ from the standard stack in some details, but doesn't expect the differences to be noticeable in practice.
+- **DHCP:** one built-in implementation for all public and private interfaces, instead of two separate servers (`udhcpd` for public, the controller for private).
+- **Metadata:** still at `169.254.169.254`, now also at `fe80::a9fe:a9fe`, and reachable from every public and private interface. On the standard stack, traffic to the metadata server simply follows the default route, if there is one. hcnet's DHCP gives **every** interface an explicit route to it. Depending on your DHCP client, you may not see that route on every interface.
 
 ## When the connection table fills up
 
@@ -117,7 +117,7 @@ What changes:
 
 This is the change you are most likely to notice. It only matters for servers with a Cloud Firewall attached.
 
-Cloud Firewalls are **stateful**. The host tracks every connection so it can let the response traffic back in without a rule for it. Hetzner documents a limit of **80,000 tracked connections** per server on the standard stack, shared between IPv4 and IPv6. hcnet raises this to **120,000 per address family**.
+Cloud Firewalls are **stateful**. The host tracks every connection so it can let packets in that no rule allows, as long as they are a response to a previously allowed packet or related to an active connection. Hetzner documents a limit of **80,000 tracked connections** per server on the standard stack, shared between IPv4 and IPv6. hcnet raises this to **120,000 per address family**.
 
 | | Standard (OVS) | hcnet |
 |---|---|---|
@@ -138,6 +138,8 @@ flowchart LR
   R2 -- yes --> D
   R2 -- no --> X
 ```
+
+Hetzner calls hcnet's behaviour "a more reasonable fallback". It still blocks traffic your rules don't allow, and traffic that doesn't need connection tracking keeps working. Traffic that does need it is disrupted: a response packet that matches neither a rule nor a known connection will most likely be dropped. A full table never opens anything your rules don't allow. It can only stop allowed traffic, as the table above shows.
 
 ## Other differences
 

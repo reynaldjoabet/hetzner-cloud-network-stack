@@ -216,7 +216,7 @@ $ curl -s http://169.254.169.254/hetzner/v1/metadata/private-networks
 
 The two stacks serve it differently:
 
-- **OVS:** a small proxy in a per-VM network namespace on the host answers, over IPv4 only. `fe80::a9fe:a9fe` gets no reply.
+- **OVS:** a small proxy in a per-VM network namespace on the host answers, over IPv4 only. `fe80::a9fe:a9fe` gets no reply. There is no dedicated route: requests follow the default route, if the server has one.
 - **hcnet:** hcnet answers over IPv4 and over IPv6 at `fe80::a9fe:a9fe` (see [Link-local addresses](#link-local-addresses)), on every public and private interface. DHCP gives every interface an explicit route to `169.254.169.254`.
 
 Because only hcnet answers on IPv6, a reply from `fe80::a9fe:a9fe` tells you the server is on hcnet.
