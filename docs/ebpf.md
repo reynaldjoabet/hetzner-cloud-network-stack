@@ -420,21 +420,21 @@ The verifier is the best-known safety layer, but ebpf.io lists four:
 [`lab/ebpf/fw.bpf.c`](../lab/ebpf/fw.bpf.c) is about 300 lines of C that behave like a stateful Cloud Firewall. It isn't Hetzner's code, but it follows the documented behaviour and exposes a switch to imitate the standard stack instead.
 
 ```text
-             ┌── tc ingress on host0: from_vm ──────────────────────────────────┐
+             ┌── tc ingress on host0: from_vm ───────────────────────────────────┐
 VM sends ──▶ │ tracked? ──yes──▶ update entry, pass                              │
              │    no ──▶ new connection? ──no──▶ pass (outbound allowed)         │
              │              yes ──▶ insert ──ok──▶ pass                          │
              │                        └─full──▶ hcnet: pass untracked            │
              │                                  standard: drop                   │
-             └──────────────────────────────────────────────────────────────────┘
-             ┌── tc egress on host0: to_vm ─────────────────────────────────────┐
-to the VM ─▶ │ tracked? ──yes──▶ update entry, pass   (replies get in this way) │
+             └───────────────────────────────────────────────────────────────────┘
+             ┌── tc egress on host0: to_vm ──────────────────────────────────────┐
+to the VM ─▶ │ tracked? ──yes──▶ update entry, pass   (replies get in this way)  │
              │    no ──▶ rule allows it? ──no──▶ drop                            │
              │              yes ──▶ new connection? ──no──▶ pass, untracked      │
              │                        yes ──▶ insert ──ok──▶ pass                │
              │                                  └─full──▶ hcnet: pass untracked  │
              │                                            standard: drop         │
-             └──────────────────────────────────────────────────────────────────┘
+             └───────────────────────────────────────────────────────────────────┘
 ```
 
 | Map | Type | Holds |

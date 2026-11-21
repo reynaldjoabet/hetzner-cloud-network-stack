@@ -175,14 +175,14 @@ The difference between the stacks is **whether the host glues packets back toget
 
 ```text
  HOST A                                                         HOST B
-┌───────────────────────────────────┐                        ┌───────────────────────────────────┐
-│ vm-a                              │                        │                              vm-b │
-│  app ─▶ TCP ─▶ virtio NIC         │                        │         virtio NIC ─▶ TCP ─▶ app  │
-│                  │                │                        │              ▲                    │
-│ ─────────────────┼─────────────── │                        │ ─────────────┼─────────────────── │
-│                  ▼                │                        │              │                    │
-│  tap ─▶ OVS or hcnet ─▶ VXLAN ─▶ NIC ══ datacenter network ══▶ NIC ─▶ unwrap ─▶ OVS or hcnet ─▶ tap │
-└───────────────────────────────────┘                        └───────────────────────────────────┘
+┌───────────────────────────────────────┐                       ┌────────────────────────────────────────┐
+│ vm-a                                  │                       │                                  vm-b  │
+│  app ─▶ TCP ─▶ virtio NIC             │                       │             virtio NIC ─▶ TCP ─▶ app   │
+│                  │                    │                       │                  ▲                     │
+│ ─────────────────┼─────────────────── │                       │ ─────────────────┼──────────────────── │
+│                  ▼                    │                       │                  │                     │
+│ tap ─▶ OVS or hcnet ─▶ VXLAN ─▶ NIC ══╪═ datacenter network ══╪═▶ NIC ─▶ unwrap ─▶ OVS or hcnet ─▶ tap │
+└───────────────────────────────────────┘                       └────────────────────────────────────────┘
 ```
 
 ### Step 1. The application writes
@@ -301,16 +301,16 @@ vm-b's virtual NIC has **one receive queue**, so one vCPU handles every arriving
 `web-1` (public IP `203.0.113.7`) uploads 1 MB to a server on the internet (`198.51.100.20`). The public interface has an MTU of **1,500**, so each piece carries **1,448 bytes**.
 
 ```text
- HOST                                                  
-┌──────────────────────────────────────────────┐
-│ web-1                                        │
-│  app ─▶ TCP ─▶ virtio NIC                    │
-│ ─────────────────┼────────────────────────── │
-│                  ▼                           │
-│  tap ─▶ Cloud Firewall ─▶ Linux routing ─▶ NIC ══▶ Hetzner routers ══▶ internet ══▶ 198.51.100.20
-│         (OVS + conntrack                      │
-│          or hcnet eBPF)                       │
-└──────────────────────────────────────────────┘
+ HOST
+┌──────────────────────────────────────────────────┐
+│ web-1                                            │
+│  app ─▶ TCP ─▶ virtio NIC                        │
+│ ─────────────────┼────────────────────────────── │
+│                  ▼                               │
+│  tap ─▶ Cloud Firewall ─▶ Linux routing ─▶ NIC ══╪══▶ Hetzner routers ══▶ internet ══▶ 198.51.100.20
+│         (OVS + conntrack                         │
+│          or hcnet eBPF)                          │
+└──────────────────────────────────────────────────┘
 ```
 
 | Step | Where | What the packet looks like |
